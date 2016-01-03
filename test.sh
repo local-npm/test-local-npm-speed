@@ -1,46 +1,47 @@
 #!/usr/bin/env bash
 
-LOCAL_NPM=$(pwd)/node_modules/.bin/local-npm
-#REPOS='lodash/lodash substack/node-browserify strongloop/express
-#  facebook/react gulpjs/gulp pouchdb/pouchdb'
-REPOS='nolanlawson/blob-util'
+#REPOS='nolanlawson/tiny-queue lodash/lodash substack/node-browserify strongloop/express facebook/react gulpjs/gulp pouchdb/pouchdb'
+REPOS='nolanlawson/tiny-queue'
+
+RESULTS_FILE=$(pwd)/results.md
 
 function timeIt () { { time npm install > /dev/null 2>&1 ; } 2>&1 | grep real | awk '{print $2}' ; }
 
-rm -f results.txt
-touch results.txt
+rm -fr $RESULTS_FILE workspace
+touch $RESULTS_FILE
 npm cache clean
+
+
 
 for repo in $REPOS; do
 
-  echo "yo yo yo"
-
-  echo "# $repo" >> results.txt
+  echo "# $repo" >> $RESULTS_FILE
 
   git clone --single-branch -b master --depth 1 https://github.com/$repo workspace
   cd workspace
 
-  echo "## local-npm" >> results.txt
+  echo "## local-npm" >> $RESULTS_FILE
 
   npm set registry http://127.0.0.1:5080
-  echo "### First npm install" >> results.txt
   rm -fr node_modules
-  timeIt >> results.txt
-  echo "### Second npm install" >> results.txt
+  TIME=$(timeIt)
+  echo "* 1st npm install: $(timeIt)" >> $RESULTS_FILE
   rm -fr node_modules
-  timeIt >> results.txt
+  echo "* 2nd npm install: $(timeIt)" >> $RESULTS_FILE
+  rm -fr node_modules
   npm cache clean
+  echo "* After cache clean: $(timeIt)" >> $RESULTS_FILE
 
-  echo "## Regular npm" >> results.txt
+  echo "## Regular npm" >> $RESULTS_FILE
 
   npm set registry https://registry.npmjs.org
-  echo "### First npm install" >> results.txt
   rm -fr node_modules
-  timeIt >> results.txt
-  echo "### Second npm install" >> results.txt
+  echo "* 1st npm install: $(timeIt)" >> $RESULTS_FILE
   rm -fr node_modules
-  timeIt >> results.txt
+  echo "* 2nd npm install: $(timeIt)" >> $RESULTS_FILE
+  rm -fr node_modules
   npm cache clean
+  echo "* After cache clean: $(timeIt)" >> $RESULTS_FILE
 
   cd ..
 
@@ -49,4 +50,4 @@ for repo in $REPOS; do
 
 done
 
-cat results.txt
+cat $RESULTS_FILE
