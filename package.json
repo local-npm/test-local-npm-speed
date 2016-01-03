@@ -1,0 +1,15 @@
+{
+  "name": "test-local-npm-speed",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "sh test.sh"
+  },
+  "keywords": [],
+  "author": "Nolan Lawson <nolan@nolanlawson.com>",
+  "dependencies": {
+    "local-npm": "1.4.9"
+  },
+  "license": "Apache-2"
+}
