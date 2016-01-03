@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
-#REPOS='nolanlawson/tiny-queue lodash/lodash substack/node-browserify strongloop/express facebook/react gulpjs/gulp pouchdb/pouchdb'
-REPOS='nolanlawson/tiny-queue'
+REPOS='nolanlawson/tiny-queue lodash/lodash substack/node-browserify strongloop/express facebook/react gulpjs/gulp pouchdb/pouchdb'
+#REPOS='nolanlawson/tiny-queue'
 
 RESULTS_FILE=$(pwd)/results.md
 
@@ -10,8 +10,6 @@ function timeIt () { { time npm install > /dev/null 2>&1 ; } 2>&1 | grep real | 
 rm -fr $RESULTS_FILE workspace
 touch $RESULTS_FILE
 npm cache clean
-
-
 
 for repo in $REPOS; do
 
@@ -24,7 +22,6 @@ for repo in $REPOS; do
 
   npm set registry http://127.0.0.1:5080
   rm -fr node_modules
-  TIME=$(timeIt)
   echo "* 1st npm install: $(timeIt)" >> $RESULTS_FILE
   rm -fr node_modules
   echo "* 2nd npm install: $(timeIt)" >> $RESULTS_FILE
