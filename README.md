@@ -1,13 +1,13 @@
 Test `local-npm` speed
 ===
 
-Compare the `npm install` times for [local-npm](https://github.com/nolanlawson/local-npm/) versus the main npm registry (https://registry.npmjs.org).
+Compare the `npm install` times for [local-npm](https://github.com/nolanlawson/local-npm/) versus regular npm, using some popular JavaScript repos.
 
 The test was run on a MacBook Air, with node 5.3.0 and npm 3.3.12. I'm on a slow-ish public WiFi at a café in Brooklyn.
 
 I started off with a small repo of mine, `nolanlawson/tiny-queue`, then moved on to some popular libraries like `lodash/lodash` and `facebook/react`. In each case, I'm just cloning the code from Github and running `npm install`.
 
-**TLDR:** Regular npm is faster for the first `npm install`, but afterwards `local-npm` is always faster, even after `npm cache clear`. Sometimes it's even 2x or 3x faster (e.g. 1m15.752s vs 3m50.467s to install `facebook/react` the 2nd time).
+**TLDR:** Regular npm is faster for the first `npm install`, but afterwards `local-npm` is always faster, even after `npm cache clear`. Sometimes it's even 2x or 3x faster (e.g. 1m15.752s vs 3m50.467s to install `facebook/react` the 2nd time). This is kind of the point of `local-npm`: it gets faster the more you run it, because it aggressively caches everything.
 
 Summary
 ----
@@ -56,7 +56,6 @@ Summary
 
 Full data
 ----
-
 
 ### nolanlawson/tiny-queue
 
@@ -159,14 +158,15 @@ Full data
 Notes
 ---
 
-Note that the test is a little unfair, because my `local-npm` has already downloaded all the metadata, but this is a typical use-case for `local-npm`. (It replicates the npm metadata on first run, which can take a few hours.) I did clear out the tarballs before the test, though.
+The test is a little unfair, because my `local-npm` has already downloaded all the metadata, but this is a typical use-case for `local-npm`. (It replicates the npm metadata on first run, which can take a few hours.) I did clear out the tarballs before the test, though.
 
-Also, repos tested later in the test may benefit from a slight boost, if they share any modules with a previous repo. But again, this is a typical use-case for `local-npm` &ndash; the idea is that the more you use it, the faster it gets.
+Also, repos tested later in the test may benefit from a slight boost, if they share any modules with a previous repo. But again, this is a typical use-case for `local-npm` &ndash; the more you use it, the more that common tarballs will be pre-cached.
 
+I find it interesting that `local-npm` is faster even after the second `npm install`, which is when npm's cache is supposed to kick in. This suggests that npm is not caching as aggressively as it could be.
 
 Reproduce these results
 ---
 
-Just clone this repo and run `npm run test`. The python script can print a summary.
+First, `npm install -g local-npm && local-npm`. Then just clone this repo and run `npm test`. The python script can print a summary afterwards.
 
-**Note:** the test will override your local `~/.npmrc` file! So you may want to do `npmrc -c testing && npmrc testing` beforehand.
+**Warning:** the test will override your local `~/.npmrc` file! So you may want to do `npmrc -c testing && npmrc testing` beforehand.
