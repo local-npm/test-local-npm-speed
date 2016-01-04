@@ -1,17 +1,13 @@
 Test `local-npm` speed
 ===
 
-This is a test to check the `npm install` times for [local-npm](https://github.com/nolanlawson/local-npm/) compared to just using normal `npm` against the main registry (https://registry.npmjs.org).
+This is a test to check the `npm install` times for [local-npm](https://github.com/nolanlawson/local-npm/) compared to normal `npm` against the main registry (https://registry.npmjs.org).
 
 The test was run on a MacBook Air, with node 5.3.0 and npm 3.3.12. I'm on a slow-ish public WiFi at a café in Brooklyn.
 
 I started off with a small repo of mine, `nolanlawson/tiny-queue`, then moved on to some popular libraries like `lodash/lodash` and `facebook/react`. In each case, I'm just cloning the code from Github and running `npm install`.
 
 **TLDR:** Regular npm is faster for the first `npm install`, but afterwards `local-npm` is always faster, even after `npm cache clear`. Sometimes it's even 2x or 3x faster (e.g. 1m15.752s vs 3m50.467s to install `facebook/react` the 2nd time).
-
-Note that the test is a little unfair, because my `local-npm` has already downloaded all the metadata, but this is a typical use-case for `local-npm`. (It replicates the npm metadata on first run, which can take a few hours.) I did clear out the tarballs before the test, though.
-
-Also, repos tested later in the test may benefit from a slight boost, if they share any modules with a previous repo. But again, this is a typical use-case for `local-npm` &ndash; the idea is that the more you use it, the faster it gets.
 
 Summary
 ----
@@ -159,6 +155,14 @@ Full data
 * 1st npm install: 7m1.702s
 * 2nd npm install: 6m40.994s
 * After cache clean: 6m53.363s
+
+Notes
+---
+
+Note that the test is a little unfair, because my `local-npm` has already downloaded all the metadata, but this is a typical use-case for `local-npm`. (It replicates the npm metadata on first run, which can take a few hours.) I did clear out the tarballs before the test, though.
+
+Also, repos tested later in the test may benefit from a slight boost, if they share any modules with a previous repo. But again, this is a typical use-case for `local-npm` &ndash; the idea is that the more you use it, the faster it gets.
+
 
 Reproduce these results
 ---
