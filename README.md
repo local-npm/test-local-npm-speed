@@ -1,7 +1,7 @@
 Test `local-npm` speed
 ===
 
-This is a test to check the `npm install` times for [local-npm](https://github.com/nolanlawson/local-npm/) compared to normal `npm` against the main registry (https://registry.npmjs.org).
+Compare the `npm install` times for [local-npm](https://github.com/nolanlawson/local-npm/) versus the main npm registry (https://registry.npmjs.org).
 
 The test was run on a MacBook Air, with node 5.3.0 and npm 3.3.12. I'm on a slow-ish public WiFi at a café in Brooklyn.
 
