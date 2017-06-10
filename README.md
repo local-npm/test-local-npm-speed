@@ -1,5 +1,7 @@
 # test-local-npm-speed
 
+[![Build Status](https://travis-ci.org/local-npm/test-local-npm-speed.svg?branch=master)](https://travis-ci.org/local-npm/test-local-npm-speed)
+
 > Compare the `npm install` times for [local-npm](https://github.com/local-npm/local-npm/) versus regular `npm`, using some popular JavaScript repos.
 
 <!-- TOC depthFrom:1 depthTo:6 withLinks:1 updateOnSave:1 orderedList:0 -->
@@ -39,8 +41,6 @@
 - [Reproduce these results](#reproduce-these-results)
 
 <!-- /TOC -->
-
-The test was run on a MacBook Air, with node 5.3.0 and npm 3.3.12. I'm on a slow-ish public WiFi at a café in Brooklyn.
 
 I started off with a small repo of mine, `nolanlawson/tiny-queue`, then moved on to some popular libraries like `lodash/lodash` and `facebook/react`. In each case, I'm just cloning the code from Github and running `npm install`.
 
