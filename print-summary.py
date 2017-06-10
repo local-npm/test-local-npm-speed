@@ -1,9 +1,8 @@
 #!/usr/bin/env python
-
 import re
 
 s = open('results.md', 'r').read()
-times = re.compile('### (\S+).*?local-npm.*?(\d+m.*?s).*?(\d+m.*?s).*?(\d+m.*?s).*?Regular npm.*?(\d+m.*?s).*?(\d+m.*?s).*?(\d+m.*?s)', re.DOTALL).findall(s)
+times = re.compile('#.?(\S+).*?local-npm.*?(\d+m.*?s).*?(\d+m.*?s).*?(\d+m.*?s).*?Regular npm.*?(\d+m.*?s).*?(\d+m.*?s).*?(\d+m.*?s)', re.DOTALL).findall(s)
 
 def diffIt(first, second):
   first = re.findall('([\d\.]+)m([\d\.]+)s', first)[0]

@@ -1,7 +1,6 @@
 #!/usr/bin/env bash
 
 REPOS='nolanlawson/tiny-queue lodash/lodash substack/node-browserify strongloop/express facebook/react gulpjs/gulp pouchdb/pouchdb'
-#REPOS='nolanlawson/tiny-queue'
 
 RESULTS_FILE=$(pwd)/results.md
 
@@ -48,3 +47,5 @@ for repo in $REPOS; do
 done
 
 cat $RESULTS_FILE
+
+python print-summary.py
