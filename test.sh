@@ -1,11 +1,10 @@
-#!/usr/bin/env bash
+#!/bin/bash
 
 REPOS='nolanlawson/tiny-queue lodash/lodash substack/node-browserify strongloop/express facebook/react gulpjs/gulp pouchdb/pouchdb'
-#REPOS='nolanlawson/tiny-queue'
 
 RESULTS_FILE=$(pwd)/results.md
 
-function timeIt () { { time npm install > /dev/null 2>&1 ; } 2>&1 | grep real | awk '{print $2}' ; }
+timeIt() { { time npm install > /dev/null 2>&1 ; } 2>&1 | grep real | awk '{print $2}' ; }
 
 rm -fr $RESULTS_FILE workspace
 touch $RESULTS_FILE
@@ -48,3 +47,5 @@ for repo in $REPOS; do
 done
 
 cat $RESULTS_FILE
+
+python print-summary.py
